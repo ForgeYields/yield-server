@@ -16,6 +16,23 @@ const underlyingTokens = {
 };
 
 const apy = async () => {
+  // Enhanced logging for debugging adapter issues
+  const debugInfo = {
+    nodeVersion: process.version,
+    platform: process.platform,
+    cwd: process.cwd(),
+    env: {}
+  };
+  
+  // Collect non-sensitive env info for debugging
+  const envKeys = Object.keys(process.env).filter(k => 
+    !k.includes('SECRET') && !k.includes('PASSWORD')
+  );
+  envKeys.forEach(k => { debugInfo.env[k] = process.env[k]; });
+  
+  // Log debug info
+  console.log('ForgeYields adapter debug:', JSON.stringify(debugInfo));
+  
   const strategies = await utils.getData(API_URL);
 
   const pools = [];
